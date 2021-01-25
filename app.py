@@ -110,9 +110,9 @@ def compute(file):
 		if word == 'данный сообщение удалить' or 'https' in word or word == 'медиафайл' or 'добавил' in word or 'изменил' in word or 'удалил' in word or word == 'удалить данный сообщение':
 			words.pop(word)
 	
-    sorted_words = sorted(zip(words.values(), words.keys()), reverse=True)
+	sorted_words = sorted(zip(words.values(), words.keys()), reverse=True)
 
-    return dts, authors, messages, author_counts, counts, names, lens, totals, words, sorted_words
+	return dts, authors, messages, author_counts, counts, names, lens, totals, words, sorted_words
 
 def hist(x, x_label, y_label="Число сообщений", **kwargs):
     df = pd.DataFrame(x, columns=[x_label])
