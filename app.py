@@ -29,17 +29,14 @@ def starts_with_date(input):
 
 @st.cache
 def get_data(message):
-	split_messsage = message.split(' - ')
-	dt = split_messsage[0]
-  
-	message = ' '.join(split_messsage[1:])
+    split_messsage = message.split(' - ')
+    dt = split_messsage[0]
+    message = ' '.join(split_messsage[1:])	
+    split_message = message.split(': ')
+    author = splitMessage[0] 
+    text = ' '.join(split_message[1:]) 
 	
-  	split_message = message.split(': ')
-
-  	author = splitMessage[0] 
-  	text = ' '.join(split_message[1:]) 
-
-  	return dt, author, text
+    return dt, author, text
 
 @st.cache
 def read_file(file_name, date_format):    
