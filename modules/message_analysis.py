@@ -40,7 +40,7 @@ def preprocess(texts):
     
 
 @st.cache
-def compute_stats(file):
+def compute(file):
     dts, authors, messages = map(list, zip(*file))
 
     author_counts = collections.Counter(authors)    
