@@ -40,7 +40,7 @@ def get_data(message):
 
 @st.cache
 def read_file(file_name, date_format):    
-    date_formats = {'mm.dd.yyyy': '%m.%d.%Y', 'mm.dd.yy': '%m.%d.%y'}
+    date_formats = {'dd.mm.yyyy': '%d.%m.%Y', 'dd.mm.yy': '%d.%m.%y'}
     result = []
     
     with open(file_name, 'r', encoding='utf=8') as file:
@@ -125,9 +125,9 @@ def main():
     st.title("WhatsApp Chat Analysis")
     
     date_format = st.sidebar.selectbox('Выберите формат даты и времени:',
-                                 ('mm.dd.yyyy', 'mm.dd.yy'), key='0')
+                                 ('dd.mm.yyyy', 'dd.mm.yy'), key='0')
     
-    file = read_file("example.txt", 'mm.dd.yyyy')    
+    file = read_file("example.txt", 'dd.mm.yyyy')    
     filename = st.file_uploader("Загрузить файл", type="txt")
 
     if filename:
