@@ -49,10 +49,10 @@ def read_file(file_name, date_format):
     for message in messages:
         dt, author, text = get_data(message)
         
-        if !(starts_with_date(message)):
-	    messages.remove(message)
+        if starts_with_date(message) == False:
+	    	messages.remove(message)
 	
-	datetime.strptime(dt, date_formats[date_format])
+		datetime.strptime(dt, date_formats[date_format])
         
         if text:
             result.append((date, author, text))
