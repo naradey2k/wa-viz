@@ -30,7 +30,7 @@ def color_func():
 def gen_wc(words):
     return wordcloud.WordCloud(background_color="white", max_font_size=80, random_state=0, width=800, height=480,
                                mask=np.array(Image.open("images/brain.jpg")), color_func=color_func,
-                               font_path="res/RobotoCondensed-Regular.ttf") \
+                               font_path="images/RobotoCondensed-Regular.ttf") \
         .generate_from_frequencies({k: v for k, v in words.items() if v > 35})
 
 def main():
