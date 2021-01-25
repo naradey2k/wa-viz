@@ -44,14 +44,14 @@ def read_file(file_name, date_format):
 	result = []
 	message_data = [] 
 	dt, author = None, None 
+	
 	with open(file_name, 'r', encoding='utf=8') as file:
 		messages = file.readlines()
 
 	for line in messages:
-		line = line.strip()
 		if 'Данное сообщение удалено' in line or '<Без медиафайлов>' in line or line == '':
 			messages.remove(line)
-	
+		line = line.strip()		
 		if starts_with_date(line): 
 			if len(message_data) > 0: 
 				result.append([dt, author, ' '.join(message_data)]) 
