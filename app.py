@@ -40,7 +40,7 @@ def get_data(message):
 
 @st.cache
 def read_file(file_name, date_format):    
-    date_formats = {'dd.mm.yyyy': '%d.%m.%Y', 'dd.mm.yy': '%d.%m.%y'}
+    date_formats = {'dd.mm.yyyy': '%d.%m.%Y, %H:%M', 'dd.mm.yy': '%d.%m.%y, %H:%M'}
     result = []
 
     with open(file_name, 'r', encoding='utf=8') as file:
