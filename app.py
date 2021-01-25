@@ -42,9 +42,9 @@ def get_data(message):
 def read_file(file_name, date_format):    
     date_formats = {'dd.mm.yyyy': '%d.%m.%Y, %H:%M', 'dd.mm.yy': '%d.%m.%y, %H:%M'}
     result = []
-	message_data = [] 
+    message_data = [] 
     dt, author = None, None 
-	
+
     with open(file_name, 'r', encoding='utf=8') as file:
         messages = file.readlines()
 
@@ -54,13 +54,13 @@ def read_file(file_name, date_format):
             if len(message_data) > 0: 
                 result.append([dt, author, ' '.join(message_data)]) 
 
-            message_data.clear() 
-            dt, author, message = get_data(line) 
-            message_data.append(message) 
-            
-        else:
-            message_data.append(line)
+        message_data.clear() 
+        dt, author, message = get_data(line) 
+        message_data.append(message) 
 
+    else:
+        message_data.append(line)
+        
     return result
 
 @st.cache
