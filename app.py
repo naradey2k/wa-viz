@@ -49,7 +49,7 @@ def read_file(file_name, date_format):
 		messages = file.readlines()
 
 	for line in messages:
-		if 'Данное сообщение удалено' in line or '<Без медиафайлов>' in line or 'https' in line:
+		if 'Вы удалили данное сообщение' in line or '<Без медиафайлов>' in line or 'https' in line or 'удалил' in line or 'изменил' in line or 'добавил' in line:
 			messages.remove(line)
 		line = line.strip()		
 		if starts_with_date(line): 
