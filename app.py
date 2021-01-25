@@ -127,11 +127,11 @@ def main():
     date_format = st.sidebar.selectbox('Выберите формат даты и времени:',
                                  ('mm.dd.yyyy', 'mm.dd.yy'), key='0')
     
-    file = read_file(open("example.txt"), 'mm.dd.yyyy')    
+    file = read_file("example.txt", 'mm.dd.yyyy')    
     filename = st.file_uploader("Загрузить файл", type="txt")
 
     if filename:
-        file = read_file(filename)
+        file = read_file(filename, date_format)
         
     dts, authors, messages, author_counts, counts, names, lens, totals, words, worded = compute(file)
 
