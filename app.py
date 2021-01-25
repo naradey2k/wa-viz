@@ -95,16 +95,16 @@ def preprocess(texts):
 
 @st.cache
 def compute(file):
-    dts, authors, messages = map(list, zip(*file))
+	dts, authors, messages = map(list, zip(*file))
 
-    author_counts = collections.Counter(authors)    
-    counts, names = zip(*sorted(zip(author_counts.values(), author_counts.keys()), reverse=True))
+	author_counts = collections.Counter(authors)    
+	counts, names = zip(*sorted(zip(author_counts.values(), author_counts.keys()), reverse=True))
 
-    lens = [[len(msg) for msg, author in zip(messages, authors) if author == name] for name in names]
-    totals = [sum(l) for l in lens]
-    lens = [int(sum(l)/len(l)) for l in lens]
+	lens = [[len(msg) for msg, author in zip(messages, authors) if author == name] for name in names]
+	totals = [sum(l) for l in lens]
+	lens = [int(sum(l)/len(l)) for l in lens]
 
-    words = collections.Counter(preprocess(messages))
+	words = collections.Counter(preprocess(messages))
 
 	for word in words.keys():
 		if word == 'данный сообщение удалить' or 'https' in word or word == 'медиафайл' or 'добавил' in word or 'изменил' in word or 'удалил' in word or word == 'удалить данный сообщение':
