@@ -52,7 +52,7 @@ def read_file(file_name, date_format):
         if starts_with_date(message) == False:
             messages.remove(message)
 
-        datetime.strptime(dt, date_formats[date_format])
+        date = datetime.strptime(dt, date_formats[date_format])
 
         if text:
             result.append((date, author, text))
