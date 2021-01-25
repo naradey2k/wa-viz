@@ -74,21 +74,22 @@ def read_file(file_name, date_format):
 
     for line in messages:
     	line = line.strip()
-        	if 'Данное сообщение удалено' in line or '<Без медиафайлов>' in message:
-            	messages.remove(message)
+        if 'Данное сообщение удалено' in line or '<Без медиафайлов>' in message:
+            messages.remove(message)
 	
-        	if starts_with_date(line): 
-            	if len(message_data) > 0: 
-                	result.append([dt, author, ' '.join(message_data)]) 
+        if starts_with_date(line): 
+            if len(message_data) > 0: 
+                result.append([dt, author, ' '.join(message_data)]) 
         
-           		message_data.clear() 
-            	dt, author, message = get_data(line) 
-            	message_data.append(message) 
+           	message_data.clear() 
+            dt, author, message = get_data(line) 
+            message_data.append(message) 
 
-        	else:
-            	message_data.append(line)
+        else:
+            message_data.append(line)
     
 	return result
+
 @st.cache
 def tokenize_texts(texts):
     simple_tokenizer = Tokenizer(lowercasing=True,
