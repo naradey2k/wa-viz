@@ -46,16 +46,18 @@ def read_file(file_name, date_format):
     with open(file_name, 'r', encoding='utf=8') as file:
         messages = file.readlines()
 
-    for message in messages:
-        dt, author, text = get_data(message)
+    for line in messages:
+        line = line.strip()         
+        if startsWithDateTime(line): 
+            if len(message_data) > 0: 
+                result.append([dt, author, ' '.join(message_data)]) 
 
-        if starts_with_date(message) == False:
-            messages.remove(message)
-
-        date = datetime.strptime(dt, date_formats[date_format])
-
-        if text:
-            result.append((date, author, text))
+            message_data.clear() 
+            dt, author, message = get_data(line) 
+            message_data.append(message) 
+            
+        else:
+            message_data.append(line)
 
     return result
 
