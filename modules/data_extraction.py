@@ -29,7 +29,7 @@ def get_data(message):
   return dt, author, text
 
 @st.cache
-def read_data(file_name, date_format):    
+def read_file(file_name, date_format):    
     date_formats = {'mm.dd.yyyy': '%m.%d.%Y', 'mm.dd.yy': '%m.%d.%y'}
     result = []
     
