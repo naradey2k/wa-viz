@@ -105,6 +105,11 @@ def compute(file):
     lens = [int(sum(l)/len(l)) for l in lens]
 
     words = collections.Counter(preprocess(messages))
+
+	for word in words.keys():
+		if word == 'данный сообщение удалить' or 'https' in word or word == 'медиафайл' or 'добавил' in word or 'изменил' in word or 'удалил' in word or word == 'удалить данный сообщение':
+			words.pop(word)
+	
     sorted_words = sorted(zip(words.values(), words.keys()), reverse=True)
 
     return dts, authors, messages, author_counts, counts, names, lens, totals, words, sorted_words
@@ -120,25 +125,28 @@ def word_cloud(words):
 	return wordcloud.WordCloud(background_color="white", max_font_size=80, random_state=0, width=800, height=480,
                                mask=np.array(Image.open("images/brain.jpg")), color_func=color_func,
                                font_path="images/RobotoCondensed-Regular.ttf") \
-        .generate_from_frequencies({k: v for k, v in words.items() if v > 35})
+        .generate_from_frequencies({k: v for k, v in words.items() if v > 20 and v < 200})
 
 
 def bar(x, y, x_label, y_label="Число сообщений", limit=999, **kwargs):
     df = pd.DataFrame(sorted(zip(y, x), reverse=True)[:limit], columns=[y_label, x_label])
+	
     return px.bar(df, x=x_label, y=y_label)
 
 def color_func(word=None, font_size=None,
                position=None, orientation=None,
                font_path=None, random_state=None):
+	
     return f"hsl({random_state.randint(230, 270)}, {110}%, {60}%)"
 
 
 @st.cache
 def gen_wc(words):
+	
     return wordcloud.WordCloud(background_color="white", max_font_size=80, random_state=0, width=800, height=480,
                                mask=np.array(Image.open("images/brain.jpg")), color_func=color_func,
                                font_path="images/RobotoCondensed-Regular.ttf") \
-        .generate_from_frequencies({k: v for k, v in words.items() if v > 35})
+        .generate_from_frequencies({k: v for k, v in words.items() if v > 20 and v < 2000})
 
 def main():
     st.title("WhatsApp Chat Analysis")
