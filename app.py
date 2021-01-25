@@ -124,7 +124,9 @@ def bar(x, y, x_label, y_label="Число сообщений", limit=999, **kwa
     df = pd.DataFrame(sorted(zip(y, x), reverse=True)[:limit], columns=[y_label, x_label])
     return px.bar(df, x=x_label, y=y_label)
 
-def color_func():
+def color_func(word=None, font_size=None,
+               position=None, orientation=None,
+               font_path=None, random_state=None):
     return f"hsl({random_state.randint(230, 270)}, {110}%, {60}%)"
 
 
