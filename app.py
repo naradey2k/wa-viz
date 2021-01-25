@@ -33,7 +33,7 @@ def get_data(message):
     dt = split_messsage[0]
     message = ' '.join(split_messsage[1:])	
     split_message = message.split(': ')
-    author = splitMessage[0] 
+    author = split_message[0] 
     text = ' '.join(split_message[1:]) 
 	
     return dt, author, text
