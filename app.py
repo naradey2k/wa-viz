@@ -112,6 +112,13 @@ def hist(x, x_label, y_label="Число сообщений", **kwargs):
     h.layout.yaxis.title.text = y_label
     return h
 
+@st.cache
+def word_cloud(words):
+	return wordcloud.WordCloud(background_color="white", max_font_size=80, random_state=0, width=800, height=480,
+                               mask=np.array(Image.open("images/brain.jpg")), color_func=color_func,
+                               font_path="images/RobotoCondensed-Regular.ttf") \
+        .generate_from_frequencies({k: v for k, v in words.items() if v > 35})
+
 
 def bar(x, y, x_label, y_label="Число сообщений", limit=999, **kwargs):
     df = pd.DataFrame(sorted(zip(y, x), reverse=True)[:limit], columns=[y_label, x_label])
@@ -144,10 +151,7 @@ def main():
     with st.beta_expander("Распределение сообщений"):
         st.subheader("По дням")
         st.plotly_chart(hist(dts, "День"))
-        st.subheader("По часам")
-        hours = [dt.hour for dt in dts]
-        st.plotly_chart(hist(hours, "Час"))
-
+	
         st.subheader("По длине")
         st.plotly_chart(hist(lens, "Длина"))
         st.subheader("По автору")
