@@ -13,7 +13,7 @@ from PIL import Image
 from string import punctuation
 from matplotlib import pyplot as plt
 from plotly import express as px
-from catboost import Tokenizer
+from catboost.text_processing import Tokenizer
 from pymorphy2 import MorphAnalyzer
 from nltk.corpus import stopwords
 from datetime import datetime
