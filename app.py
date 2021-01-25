@@ -42,21 +42,21 @@ def get_data(message):
 def read_file(file_name, date_format):    
     date_formats = {'dd.mm.yyyy': '%d.%m.%Y', 'dd.mm.yy': '%d.%m.%y'}
     result = []
-    
+
     with open(file_name, 'r', encoding='utf=8') as file:
         messages = file.readlines()
-    
+
     for message in messages:
         dt, author, text = get_data(message)
-        
+
         if starts_with_date(message) == False:
-	    	messages.remove(message)
-	
-		datetime.strptime(dt, date_formats[date_format])
-        
+            messages.remove(message)
+
+        datetime.strptime(dt, date_formats[date_format])
+
         if text:
             result.append((date, author, text))
-            
+
     return result
 
 @st.cache
@@ -127,8 +127,7 @@ def gen_wc(words):
 def main():
     st.title("WhatsApp Chat Analysis")
     
-    date_format = st.sidebar.selectbox('Выберите формат даты и времени:',
-                                 ('dd.mm.yyyy', 'dd.mm.yy'), key='0')
+    date_format = st.sidebar.selectbox('Выберите формат даты и времени:', ('dd.mm.yyyy', 'dd.mm.yy'), key='0')
     
     file = read_file("example.txt", 'dd.mm.yyyy')    
     filename = st.file_uploader("Загрузить файл", type="txt")
