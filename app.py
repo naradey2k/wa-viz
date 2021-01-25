@@ -48,7 +48,7 @@ def read_file(file_name, date_format):
 
     for line in messages:
         line = line.strip()         
-        if startsWithDateTime(line): 
+        if starts_with_date(line): 
             if len(message_data) > 0: 
                 result.append([dt, author, ' '.join(message_data)]) 
 
