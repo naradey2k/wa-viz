@@ -127,13 +127,13 @@ def main():
     date_format = st.sidebar.selectbox('Выберите формат даты и времени:',
                                  ('mm.dd.yyyy', 'mm.dd.yy'), key='0')
     
-    file = data_ext.read_file(open("example.txt"))    
+    file = read_file(open("example.txt"))    
     filename = st.file_uploader("Загрузить файл", type="txt")
 
     if filename:
-        file = data_ext.read_file(filename)
+        file = read_file(filename)
         
-    dts, authors, messages, author_counts, counts, names, lens, totals, words, worded = data_ext.compute(file)
+    dts, authors, messages, author_counts, counts, names, lens, totals, words, worded = compute(file)
 
     with st.beta_expander("Распределение сообщений"):
         st.subheader("По дням")
