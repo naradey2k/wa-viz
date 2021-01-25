@@ -69,8 +69,8 @@ def read_file(file_name, date_format):
 	result = []
 	message_data = [] 
 	dt, author = None, None 
-    with open(file_name, 'r', encoding='utf=8') as file:
-    	messages = file.readlines()
+	with open(file_name, 'r', encoding='utf=8') as file:
+		messages = file.readlines()
 
     for line in messages:
     	line = line.strip()
