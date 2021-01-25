@@ -2,14 +2,106 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import wordcloud
+import collections
+import nltk
+import re
+
+nltk.download('stopwords')
+nltk.download('punkt')
 
 from PIL import Image
 from string import punctuation
 from matplotlib import pyplot as plt
 from plotly import express as px
+from catboost import Tokenizer
+from pymorphy2 import MorphAnalyzer
+from nltk.corpus import stopwords
+from datetime import datetime
 
-from modules import data_extraction as data_ext
-from odules import message_analysis as analysis
+def starts_with_date(input):
+    pattern = '^([0-2][0-9]|(3)[0-1])(\.)(((0)[0-9])|((1)[0-2]))(\.)(\d{2}|\d{4})(,)? ([0-9])|([0-9]):([0-9][0-9])$'
+    result = re.match(pattern, input)
+
+    if result:
+        return True
+
+    return False
+
+@st.cache
+def get_data(message):
+	split_messsage = message.split(' - ')	
+
+	dt = split_messsage[0]
+  
+	message = ' '.join(split_messsage[1:])
+	
+  split_message = message.split(': ') 
+  
+  author = splitMessage[0] 
+  text = ' '.join(split_message[1:]) 
+
+  return dt, author, text
+
+@st.cache
+def read_file(file_name, date_format):    
+    date_formats = {'mm.dd.yyyy': '%m.%d.%Y', 'mm.dd.yy': '%m.%d.%y'}
+    result = []
+    
+    with open(file_name, 'r', encoding='utf=8') as file:
+        messages = file.readlines()
+    
+    for message in messages:
+        dt, author, text = get_data(message)
+        
+        date = datetime.strptime(dt, date_formats[date_format])
+        
+        if text:
+            result.append((date, author, text))
+            
+    return result
+
+@st.cache
+def tokenize_texts(texts):
+    simple_tokenizer = Tokenizer(lowercasing=True,
+                                 separator_type='BySense',
+                                 token_types=['Word', 'Number'])
+
+    return [simple_tokenizer.tokenize(text) for text in texts]
+
+@st.cache
+def preprocess(texts):
+    stop_words = stopwords.words('russian')    
+    lemmatizer = MorphAnalyzer()
+    texts_copy = []    
+
+    for text in tokenize_texts(texts):
+        text_copy = []
+
+        for token in text:
+            if token not in stop_words:
+                token = lemmatizer.normal_forms(token)[0]
+                text_copy.append(token)
+
+        texts_copy.append(' '.join(text_copy))
+            
+    return texts_copy
+    
+
+@st.cache
+def compute(file):
+    dts, authors, messages = map(list, zip(*file))
+
+    author_counts = collections.Counter(authors)    
+    counts, names = zip(*sorted(zip(author_counts.values(), author_counts.keys()), reverse=True))
+
+    lens = [[len(msg) for msg, author in zip(messages, authors) if author == name] for name in names]
+    totals = [sum(l) for l in lens]
+    lens = [int(sum(l)/len(l)) for l in lens]
+
+    words = collections.Counter(preprocess(messages))
+    sorted_words = sorted(zip(words.values(), words.keys()), reverse=True)
+
+    return dts, authors, messages, author_counts, counts, names, lens, totals, words, sorted_words
 
 def hist(x, x_label, y_label="Число сообщений", **kwargs):
     df = pd.DataFrame(x, columns=[x_label])
