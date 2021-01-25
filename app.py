@@ -127,7 +127,7 @@ def main():
     date_format = st.sidebar.selectbox('Выберите формат даты и времени:',
                                  ('mm.dd.yyyy', 'mm.dd.yy'), key='0')
     
-    file = read_file(open("example.txt"))    
+    file = read_file(open("example.txt"), 'mm.dd.yyyy')    
     filename = st.file_uploader("Загрузить файл", type="txt")
 
     if filename:
