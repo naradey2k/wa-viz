@@ -60,9 +60,7 @@ def read_file(file_name, date_format):
 			dt, author, message = get_data(line) 
 			message_data.append(message) 
 
-		else:
-			if 'Данное сообщение удалено' in line or '<Без медиафайлов>' in line or 'https' in line:
-				messages.remove(line)
+		else:		
 				
 			message_data.append(line)
     
