@@ -74,8 +74,8 @@ def read_file(file_name, date_format):
 
 	for line in messages:
 		line = line.strip()
-		if 'Данное сообщение удалено' in line or '<Без медиафайлов>' in message:
-			messages.remove(message)
+		if 'Данное сообщение удалено' in line or '<Без медиафайлов>' in line:
+			messages.remove(line)
 	
 		if starts_with_date(line): 
 			if len(message_data) > 0: 
