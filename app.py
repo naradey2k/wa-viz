@@ -106,7 +106,7 @@ def compute(file):
 
 	words = collections.Counter(preprocess(messages))
 
-	for word in words.keys():
+	for word in list(words):
 		if word == 'данный сообщение удалить' or 'https' in word or word == 'медиафайл' or 'добавил' in word or 'изменил' in word or 'удалил' in word or word == 'удалить данный сообщение':
 			words.pop(word)
 	
