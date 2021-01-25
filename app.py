@@ -44,7 +44,8 @@ def main():
 
     if filename:
         file = data_ext.read_file(filename)
-    dts, authors, messages, author_counts, counts, names, lens, totals, words, worded = data_ext.compute_stats(file)
+        
+    dts, authors, messages, author_counts, counts, names, lens, totals, words, worded = data_ext.compute(file)
 
     with st.beta_expander("Распределение сообщений"):
         st.subheader("По дням")
