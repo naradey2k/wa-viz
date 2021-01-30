@@ -3,7 +3,7 @@ import pandas as pd
 import sys
 
 from modules import data_extraction as extraction
-from modules import data_analysis as analsysis
+from modules import data_analysis as analysis
 
 def main():
 	st.title('WhatsApp Chat Analysis')
@@ -28,10 +28,10 @@ def main():
 			df = extraction.create_df(data, date_format)
 
 			with st.beta_expander('Самые активные дни'):
-				st.pyplot(analsysis.most_active_df(df))
+				st.pyplot(analysis.most_active_df(df))
 
 			with st.beta_expander(''):
-				st.pyplot(analsysis.most_active_authors(df))
+				st.pyplot(analysis.most_active_authors(df))
 
 				authors = pd.DataFrame(df[df['Author'] != None].value_counts().sort_values(by='columns', ascending=False), columns=['Имя', 'Место'])
 				authors.index += 1
@@ -39,16 +39,12 @@ def main():
 
 				st.table(authors)
 
-			with beta_expander():
-				st.pyplot(analsysis.create_wc(df, form)
+			with beta_expander('Облако слов'):
+				st.pyplot(analysis.create_wc(df, form))
 
-		except:
-			error = sys.exc_info()[0]
-			st.error('Что-то пошло не так! Тип ошибки - '.format(error.__name__))
-
-	else:
-		error = sys.exc_info()[0]
-		st.error('Что-то пошло не так! Выберите другой тип даты! Тип ошибки - '.format(error.__name__))
+	    except:
+		    error = sys.exc_info()[0]
+		    st.error('Что-то пошло не так! Выберите другой тип даты! Тип ошибки - '.format(error.__name__))
 
 
 if __name__ == '__main__':
