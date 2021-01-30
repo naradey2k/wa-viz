@@ -21,11 +21,10 @@ def main():
 	form = st.sidebar.selectbox(label='', options=('Сердце', 'Мозг', 'Штурмовик'), key=0)
 
 	uploaded_file = st.file_uploader(label='', type='txt')
-
+	
 	if uploaded_file is not None:
 		try:
 			data = extraction.read_file(uploaded_file)
-
 			df = extraction.create_df(data, date_format)
 
 			with st.beta_expander('Самые активные дни'):
@@ -35,15 +34,13 @@ def main():
 				st.pyplot(analsysis.most_active_authors(df))
 
 				authors = pd.DataFrame(df[df['Author'] != None].value_counts().sort_values(by='columns', ascending=False), columns=['Имя', 'Место'])
-
 				authors.index += 1
-				authors.index.name = 'Место'				
+				authors.index.name = 'Место'	
 
 				st.table(authors)
 
 			with beta_expander():
-				st.pyplot(analsysis.create_wc(df, form))
-
+				st.pyplot(analsysis.create_wc(df, form)
 
 		except:
 			error = sys.exc_info()[0]
@@ -51,7 +48,7 @@ def main():
 
 	else:
 		error = sys.exc_info()[0]
-		st.error('Что-то пошло не так! Выберите другой тип даты!as'.format(error.__name__))
+		st.error('Что-то пошло не так! Выберите другой тип даты! Тип ошибки - '.format(error.__name__))
 
 
 if __name__ == '__main__':
