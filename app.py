@@ -9,11 +9,18 @@ def main():
 	st.sidebar.text('2) Настройки ⋮ -> Еще -> Экспорт чата')
 	st.sidebar.text('3) Выберите "Без Файлов"')
 
+	st.sidebar.subheader('Выберите формат даты:')
+	date_format = st.sidebar.selectbox(options=('dd.mm.yyyy', 'dd.mm.yy'), key=0)
+
+	st.sidebar.subheader('Выберите форму облака слов:')
+	form = st.sidebar.selectbox(options=('Сердце', 'Мозг', 'Штурмовик'), key=0)
+
+	uploaded_file = st.file_uploader(type='txt')
 
 
 
 
-	uploaded_file = st.file_uploader('Загрузите файл', type='txt')
+
 
 if __name__ == '__main__':
 	main()
