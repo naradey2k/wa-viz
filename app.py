@@ -6,7 +6,7 @@ def main():
 
 	st.sidebar.subheader('Как экспортировать чат?')	
 	st.sidebar.text('1) Зайдите в чат-группу')
-	st.sidebar.text('2) Нажмите Настройки ⋮ -> Еще -> Экспорт чата')
+	st.sidebar.text('2) Настройки ⋮ -> Еще -> Экспорт чата')
 	st.sidebar.text('3) Выберите "Без Файлов"')
 
 
