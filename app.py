@@ -9,9 +9,11 @@ def main():
 	st.sidebar.text('2) Перейдите в Настройки ⋮ -> Еще -> Экспорт чата')
 	st.sidebar.text('3) Выберите "Без Файлов"')
 
-	
+
 
 
 
 	uploaded_file = st.file_uploader('Загрузите файл', type='txt')
 
+if __name__ == '__main__':
+	main()
