@@ -46,9 +46,9 @@ def create_df(messages, date_format):
 			if len(l_messages) > 0:
 				data.append([date, author, ' '.join(l_messages)])
 
-		l_messages.clear()
-		date, author, text = get_data(message)
-		l_messages.append(text)
+			l_messages.clear()
+			date, author, text = get_data(message)
+			l_messages.append(text)
 
 		else:
 			l_messages.append(text)
