@@ -7,8 +7,8 @@ import pymorphy2
 import random
 import nltk
 
-ntlk.download('stopwords')
-ntlk.download('punkt')
+nltk.download('stopwords')
+nltk.download('punkt')
 
 from nltk.tokenize import word_tokenize
 from pymorphy2 import MorphAnalyzer
