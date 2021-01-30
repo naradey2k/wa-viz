@@ -32,7 +32,9 @@ def read_file(file_name):
 	return messages
 
 @st.cache
-def create_df(messages, date_format):
+def create_df(file_name, date_format):
+	messages = read_file(file_name)
+	
 	date_formats = {'dd.mm.yyyy': '%d.%m.%Y',
 					'dd.mm.yy': '%d.%m.%y'}
 
