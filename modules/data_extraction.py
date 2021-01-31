@@ -4,16 +4,6 @@ import re
 
 from datetime import datetime
 
-def starts_with_dt(message):
-	pattern = r'^([0-2][0-9]|(3)[0-1])(\.)(((0)[0-9])|((1)[0-2]))(\.)(\d{2}|\d{4})(,)? ([0-9])|([0-9]):([0-9][0-9])$'
-	result = re.match(pattern, message)
-
-	if result:
-		return True
-
-	return False
-
-
 def get_data(message):
 	splitted = message.split(' - ')
 
@@ -30,23 +20,20 @@ def create_df(messages, date_format):
 					'dd.mm.yy': '%d.%m.%y'}
 
 	data = []
-	l_messages = []
-
 	author, text = None, None
 
-	for message in messages:
-		if starts_with_dt(message):
-			if len(l_messages) > 0:
-				data.append([date, author, ' '.join(l_messages)])
-
-			l_messages.clear()
-			date, author, text = get_data(message)
-			l_messages.append(text)
-
-		else:
-			l_messages.append(text)
+	for message in messages:	
+		date, author, text = get_data(message)		
+		data.append([date, author, text])
 
 	df = pd.DataFrame(data, columns=['Date', 'Author', 'Text'])	
 	df['Date'] = pd.to_datetime(df['Date'], format=date_formats[date_format])
 
 	return df
+
+@st.cache(persist=True, allow_output_mutation=True)
+def read_file(file_name, date_format):	
+	with open(file_name, 'r', encoding='utf-8') as file:			
+		messages = file.readlines()		
+
+	return extraction.create_df(messages)
