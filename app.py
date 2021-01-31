@@ -30,8 +30,10 @@ def main():
 				messages = file.readlines()		
 
 			return extraction.create_df(messages, date_format)
-	
-		df = read_file(uploaded_file, date_format)
+		
+		file = uploaded_file.read()
+		
+		df = read_file(file, date_format)
 
 		with st.beta_expander('Самые активные дни'):
 			st.pyplot(analysis.most_active_df(df))
