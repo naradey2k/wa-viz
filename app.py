@@ -31,24 +31,44 @@ def main():
 
 			return extraction.create_df(messages, date_format)
 		
-		file = uploaded_file.read()
+		try:
+			file = uploaded_file.read()
 		
-		df = read_file(file, date_format)
+			df = read_file(file, date_format)
+		
+			with st.beta_expander('Самые активные дни'):
+				st.pyplot(analysis.most_active_df(df))
 
-		with st.beta_expander('Самые активные дни'):
-			st.pyplot(analysis.most_active_df(df))
+			with st.beta_expander(''):
+				st.pyplot(analysis.most_active_authors(df))
 
-		with st.beta_expander(''):
-			st.pyplot(analysis.most_active_authors(df))
+				authors = pd.DataFrame(df[df['Author'] != None].value_counts().sort_values(by='columns', ascending=False), columns=['Имя', 'Место'])
+				authors.index += 1
+				authors.index.name = 'Место'	
 
-			authors = pd.DataFrame(df[df['Author'] != None].value_counts().sort_values(by='columns', ascending=False), columns=['Имя', 'Место'])
-			authors.index += 1
-			authors.index.name = 'Место'	
+				st.table(authors)
 
-			st.table(authors)
+			with beta_expander('Облако слов'):
+				st.pyplot(analysis.create_wc(df, form))
+			
+		except OSError as exc:
+    			if exc.errno == 36:
+        			df = extraction.craete_df(file, date_format)
+				
+				with st.beta_expander('Самые активные дни'):
+					st.pyplot(analysis.most_active_df(df))
 
-		with beta_expander('Облако слов'):
-			st.pyplot(analysis.create_wc(df, form))
+				with st.beta_expander(''):
+					st.pyplot(analysis.most_active_authors(df))
+
+					authors = pd.DataFrame(df[df['Author'] != None].value_counts().sort_values(by='columns', ascending=False), columns=['Имя', 'Место'])
+					authors.index += 1
+					authors.index.name = 'Место'	
+
+					st.table(authors)
+
+				with beta_expander('Облако слов'):
+					st.pyplot(analysis.create_wc(df, form))
 
 # 		except:
 # 			error = sys.exc_info()[0]
