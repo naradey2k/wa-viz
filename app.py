@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import csv
 import sys
 
 from modules import data_extraction as extraction
