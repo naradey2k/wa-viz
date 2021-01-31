@@ -25,7 +25,9 @@ def main():
 	if uploaded_file is not None:
 # 		try:
 # 		data = extraction.read_file(uploaded_file)
-		messages = extraction.read_file(uploaded_file)
+		data = uploaded_file.read()
+	
+		messages = extraction.read_file(data)
 	
 		df = extraction.create_df(messages, date_format)
 
