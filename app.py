@@ -20,7 +20,7 @@ def main():
 	st.sidebar.subheader('Выберите форму облака слов:')
 	form = st.sidebar.selectbox(label='', options=('Сердце', 'Мозг', 'Штурмовик'), key=0)
 
-	uploaded_file = st.file_uploader(label='', type='txt').read()
+	uploaded_file = st.file_uploader(label='', type='txt')
 	
 	if uploaded_file is not None:
 # 		try:
