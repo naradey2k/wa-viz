@@ -36,4 +36,4 @@ def read_file(file_name, date_format):
 	with open(file_name, 'r', encoding='utf-8') as file:			
 		messages = file.readlines()		
 
-	return extraction.create_df(messages)
+	return create_df(messages, date_format)
