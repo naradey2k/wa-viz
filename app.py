@@ -54,7 +54,7 @@ def main():
 				st.pyplot(analysis.create_wc(df, form))
 			
 		except OSError as exc:			
-			file = str(file, 'utf-8')
+			file = file.decode('utf-8')
 				
 			df = extraction.create_df(file, date_format)
 
