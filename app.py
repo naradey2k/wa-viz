@@ -25,11 +25,21 @@ def main():
 	if uploaded_file is not None:
 # 		try:
 # 		data = extraction.read_file(uploaded_file)
-		data = uploaded_file.read()
+		@st.cache(persist=True, allow_output_mutation=True)
+    		def load_data(date_format=date_format):
+        
+        		reader = csv.reader(uploaded_file, delimiter='\n')
+        		messages = []
+        
+        		for each in reader:
+            			if len(each) > 0:
+                			messages.append(each[0])
+            			else:
+                			messages.append('')
+
+        		return extraction.create_df(messages, date_format)
 	
-		messages = extraction.read_file(data)
-	
-		df = extraction.create_df(messages, date_format)
+		data = load_data()
 
 		with st.beta_expander('Самые активные дни'):
 			st.pyplot(analysis.most_active_df(df))
