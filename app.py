@@ -26,7 +26,7 @@ def main():
 # 		try:
 # 		data = extraction.read_file(uploaded_file)
 		@st.cache(persist=True, allow_output_mutation=True)
-    		def load_data(date_format=date_format):
+		def load_data(date_format=date_format):
         
         		reader = csv.reader(uploaded_file, delimiter='\n')
         		messages = []
