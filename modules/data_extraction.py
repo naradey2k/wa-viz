@@ -27,7 +27,7 @@ def get_data(message):
 @st.cache
 def read_file(file_name):
 	with open(file_name, 'r', encoding='utf-8') as file:
-		messages = file.readlines()
+		messages = file.decode('utf-8').readlines()
 
 	return messages
 
