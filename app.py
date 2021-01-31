@@ -59,7 +59,7 @@ def main():
 			df = extraction.create_df(file, date_format)
 
 			with st.beta_expander('Самые активные дни'):
-				st.pyplot(analysis.most_active_df(df))
+				st.pyplot(analysis.most_active_dt(df))
 
 			with st.beta_expander(''):
 				st.pyplot(analysis.most_active_authors(df))
