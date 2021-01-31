@@ -53,8 +53,8 @@ def main():
 			
 		except OSError as exc:
     			if exc.errno == 36:
-        			df = extraction.craete_df(file, date_format)
-				
+				df = extraction.craete_df(file, date_format)
+
 				with st.beta_expander('Самые активные дни'):
 					st.pyplot(analysis.most_active_df(df))
 
