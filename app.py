@@ -25,7 +25,7 @@ def main():
 	if uploaded_file is not None:
 # 		try:
 # 		data = extraction.read_file(uploaded_file)
-		data = str(uploaded_file.read())
+		data = str(uploaded_file)
 	
 		messages = extraction.read_file(data)
 	
