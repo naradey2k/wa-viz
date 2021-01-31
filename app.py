@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import csv
 import sys
 
 from modules import data_extraction as extraction
@@ -27,20 +26,13 @@ def main():
 # 		try:
 # 		data = extraction.read_file(uploaded_file)
 		@st.cache(persist=True, allow_output_mutation=True)
-		def load_data(date_format=date_format):
-        
-        		reader = csv.reader(uploaded_file, delimiter='\n')
-        		messages = []
-        
-        		for each in reader:
-            			if len(each) > 0:
-                			messages.append(each[0])
-            			else:
-                			messages.append('')
+		def read_file(file_name):	
+			with open(file_name, 'r', encoding='utf-8') as file:			
+				messages = file.readlines()		
 
-        		return extraction.create_df(messages, date_format)
+			return extraction.create_df(messages)
 	
-		data = load_data()
+		df = read_file(uploaded_file, date_format=date_format)
 
 		with st.beta_expander('Самые активные дни'):
 			st.pyplot(analysis.most_active_df(df))
