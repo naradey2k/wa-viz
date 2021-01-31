@@ -25,8 +25,9 @@ def main():
 	if uploaded_file is not None:
 # 		try:
 # 		data = extraction.read_file(uploaded_file)
+		messages = extraction.read_file(uploaded_file)
 	
-		df = extraction.create_df(uploaded_file, date_format)
+		df = extraction.create_df(messages, date_format)
 
 		with st.beta_expander('Самые активные дни'):
 			st.pyplot(analysis.most_active_df(df))
