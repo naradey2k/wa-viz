@@ -26,10 +26,8 @@ def main():
 # 		try:
 # 		data = extraction.read_file(uploaded_file)
 		data = uploaded_file.read()
-		
-		pp = str(data, 'utf-8')
 	
-		messages = extraction.read_file(pp)
+		messages = extraction.read_file(data)
 	
 		df = extraction.create_df(messages, date_format)
 
