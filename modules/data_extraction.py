@@ -24,14 +24,10 @@ def get_data(message):
 
 	return date, author, text
 
-@st.cache
+@st.cache(persist=True, allow_output_mutation=True)
 def read_file(file_name):	
-	messages = []
-	
 	with open(file_name, 'r', encoding='utf-8') as file:			
-		content = file.readlines()
-		for message in content:
-			messages.append(message.decode('utf-8'))
+		messages = file.readlines()		
 
 	return messages
 
