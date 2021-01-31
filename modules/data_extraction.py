@@ -5,7 +5,7 @@ import re
 from datetime import datetime
 
 def starts_with_dt(message):
-	pattern = rb'^([0-2][0-9]|(3)[0-1])(\.)(((0)[0-9])|((1)[0-2]))(\.)(\d{2}|\d{4})(,)? ([0-9])|([0-9]):([0-9][0-9])$'
+	pattern = b'^([0-2][0-9]|(3)[0-1])(\.)(((0)[0-9])|((1)[0-2]))(\.)(\d{2}|\d{4})(,)? ([0-9])|([0-9]):([0-9][0-9])$'
 	result = re.match(pattern, message)
 
 	if result:
@@ -27,7 +27,7 @@ def get_data(message):
 @st.cache
 def read_file(file_name):	
 	with open(file_name, 'r', encoding='utf-8') as file:
-		file = file.decode('utf-8')
+# 		file = file.decode('utf-8')
 		messages = file.readlines()
 
 	return messages
