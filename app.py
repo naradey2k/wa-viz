@@ -24,17 +24,8 @@ def main():
 	
 	if uploaded_file is not None:
 # 		try:
-# 		data = extraction.read_file(uploaded_file)
-		@st.cache(persist=True, allow_output_mutation=True)
-		def read_file(file_name, date_format):	
-			with open(file_name, 'r', encoding='utf-8') as file:			
-				messages = file.readlines()		
 
-			return extraction.create_df(messages)
-		
-		data = uploaded_file.read()
-		
-		df = read_file(data, date_format=date_format)
+		df = extraction.read_file(uploaded_file, date_format=date_format)
 
 		with st.beta_expander('Самые активные дни'):
 			st.pyplot(analysis.most_active_df(df))
