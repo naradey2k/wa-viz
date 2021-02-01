@@ -1,7 +1,9 @@
+import matplotlib.pyplot as plt
 import streamlit as st
 import pandas as pd
 import sys
 
+from plotly import express as px
 from modules import data_extraction as extraction
 from modules import data_analysis as analysis
 
