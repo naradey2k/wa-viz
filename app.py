@@ -44,9 +44,7 @@ def main():
 			return plot
 
 		def plot_authors(df):
-			authors = df['Author'].value_counts().to_dict()
-			
-			authors.pop('None')
+			authors = df['Author'].value_counts().to_dict()	
 			
 			auth_df = pd.DataFrame(data=authors.values(), columns=['Кол-во сообщений'], index=authors.keys())
 	
