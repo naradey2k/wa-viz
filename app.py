@@ -38,8 +38,8 @@ def main():
 
 			dt_df = pd.DataFrame(data=dt.values(), columns=['Кол-во сообщений'], index=dt.keys())
 			
-			plot = px.histogram(dt_df, x='Дата')    
-			plot.layout.yaxis.title.text = 'Кол-во сообщений'
+			plot = px.histogram(dt_df, x='Кол-во сообщений')    
+			plot.layout.yaxis.title.text = 'Дата'
 
 			return plot
 
@@ -48,8 +48,8 @@ def main():
 
 			auth_df = pd.DataFrame(data=authors.values(), columns=['Кол-во сообщений'], index=authors.keys())
 	
-			plot = px.histogram(auth_df, x='Автор')    
-			plot.layout.yaxis.title.text = 'Кол-во сообщений'
+			plot = px.histogram(auth_df, x='Кол-во сообщений')    
+			plot.layout.yaxis.title.text = 'Автор'
 
 			return plot
 
