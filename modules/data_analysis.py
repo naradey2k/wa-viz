@@ -7,13 +7,12 @@ import pymorphy2
 import random
 import nltk
 
-nltk.download('stopwords')
-nltk.download('punkt')
+ntlk.download('stopwords')
+ntlk.download('punkt')
 
 from nltk.tokenize import word_tokenize
 from pymorphy2 import MorphAnalyzer
 from nltk.corpus import stopwords
-from plotly import express as px
 from PIL import Image
 
 @st.cache
@@ -22,7 +21,7 @@ def tokenize(text):
 
 @st.cache
 def get_words(df):
-	texts = df['Text'].values
+	texts = df['Text'].tolist()
 	words = []
 
 	lemmatizer = MorphAnalyzer()
@@ -46,7 +45,7 @@ def create_wc(df, form):
 	df = df[df['Text'] != 'Данное соощение удалено']
 	df = df[df['Text'] != 'Вы удалили данное соощение']
 
-	texts = df['Text'].values
+	texts = df['Text'].tolist()
 
 	words = get_words(texts)
 
@@ -61,41 +60,28 @@ def color_func(word=None, font_size=None,
 	
 	return f'hsl({random_state.randint(230, 270)}, {110}%, {60}%)'
 
+
 def most_active_dt(df):
-# 	fig, ax = plt.subplots()
+	dt = df['Date'].value_counts().head(10).to_dict()
+
+	dt_df = pd.DataFrame(data=dt.values(), columns=['Кол-во сообщений'], index=dt.keys())
 	
-#     	ax = df['Date'].value_counts().head(10).plot.barh()
-#     	ax.set_title('10 самых активных дней')
-#     	ax.set_xlabel('Кол-во сообщений')
-#     	ax.set_ylabel('Дата')
+    plot = px.histogram(dt_df, x='Дата')    
+    plot.layout.yaxis.title.text = 'Кол-во сообщений'
+
+    return plot
+
+def plot_authors(df):
+	authors = df[df['Author'] != None].value_counts().to_dict()
+
+	auth_df = pd.DataFrame(data=authors.values(), columns=['Кол-во сообщений'], index=authors.keys())
 	
-#     	plt.tight_layout()
-	
-#     	return fig
+    plot = px.histogram(auth_df, x='Автор')    
+    plot.layout.yaxis.title.text = 'Кол-во сообщений'
 
-	df = df['Date'].values_counts().head(10)
-		
-	plot = px.histogram(df, x='Дата', **kwargs)
-	plot.layout.yaxis.title.text = 'Кол-во сообщений'
-		
-	return plot
+    return plot
 
-def create_hist(df
 
-def most_active_authors(df):
-# 	fig, ax = matplotlib.pyplot.subplots()
 
-# 	ax = df[df['Author'] != None].value_counts().plot.bar()
-# 	ax.set_title('Частые пользователи')
-# 	ax.set_xlabel('Пользователи')
-# 	ax.set_ylabel('Кол-во сообщений')
 
-# 	matplotlib.pyplot.tight_layout()
 
-# 	return fig
-	df = df[df['Author'] != None].values_counts()
-		
-	plot = px.histogram(df, x='Автор', **kwargs)
-	plot.layout.yaxis.title.text = 'Кол-во сообщений'
-		
-	return plot
