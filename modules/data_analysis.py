@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -9,7 +10,6 @@ import nltk
 nltk.download('stopwords')
 nltk.download('punkt')
 
-from matplotlib import pyplot as plt
 from nltk.tokenize import word_tokenize
 from pymorphy2 import MorphAnalyzer
 from nltk.corpus import stopwords
