@@ -59,7 +59,7 @@ def main():
 			df = extraction.create_df(file, date_format)
 
 			with st.beta_expander('Самые активные дни'):
-				st.plotly_chart(analysis.plot_dt(df))
+				st.plotly_chart(analysis.most_active_dt(df))
 
 			with st.beta_expander(''):
 				st.plotly_chart(analysis.plot_authors(df))
