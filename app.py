@@ -39,10 +39,10 @@ def main():
 			df = read_file(file, date_format)
 		
 			with st.beta_expander('Самые активные дни'):
-				st.pyplot(analysis.most_active_df(df))
+				st.plotly_chart(analysis.most_active_df(df))
 
 			with st.beta_expander(''):
-				st.pyplot(analysis.most_active_authors(df))
+				st.plotly_chart(analysis.most_active_authors(df))
 
 				authors = pd.DataFrame(df[df['Author'] != None].value_counts().sort_values(by='columns', ascending=False), columns=['Имя', 'Место'])
 				authors.index += 1
@@ -51,7 +51,7 @@ def main():
 				st.table(authors)
 
 			with beta_expander('Облако слов'):
-				st.pyplot(analysis.create_wc(df, form))
+				st.plotly_chart(analysis.create_wc(df, form))
 			
 		except OSError as exc:			
 			file = str(file)
@@ -59,19 +59,19 @@ def main():
 			df = extraction.create_df(file, date_format)
 
 			with st.beta_expander('Самые активные дни'):
-				st.pyplot(analysis.most_active_dt(df))
+				st.plotly_chart(analysis.plot_dt(df))
 
 			with st.beta_expander(''):
-				st.pyplot(analysis.most_active_authors(df))
+				st.plotly_chart(analysis.plot_authors(df))
 
-				authors = pd.DataFrame(df[df['Author'] != None].value_counts().sort_values(by='columns', ascending=False), columns=['Имя', 'Место'])
-				authors.index += 1
-				authors.index.name = 'Место'	
+				# authors = pd.DataFrame(df[df['Author'] != None].value_counts().sort_values(by='columns', ascending=False), columns=['Имя', 'Место'])
+				# authors.index += 1
+				# authors.index.name = 'Место'	
 
-				st.table(authors)
+				# st.table(authors)
 
 			with beta_expander('Облако слов'):
-				st.pyplot(analysis.create_wc(df, form))
+				st.plotly_chart(analysis.create_wc(df, form))
 
 # 		except:
 # 			error = sys.exc_info()[0]
