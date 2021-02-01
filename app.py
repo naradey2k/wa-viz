@@ -73,7 +73,7 @@ def main():
 
 				st.table(authors)
 
-			with beta_expander('Облако слов'):
+			with st.beta_expander('Облако слов'):
 				st.plotly_chart(analysis.create_wc(df, form))
 			
 		except OSError as exc:			
@@ -93,7 +93,7 @@ def main():
 
 				# st.table(authors)
 
-			with beta_expander('Облако слов'):
+			with st.beta_expander('Облако слов'):
 				st.plotly_chart(analysis.create_wc(df, form))
 
 # 		except:
