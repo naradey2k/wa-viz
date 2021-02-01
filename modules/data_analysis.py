@@ -65,7 +65,7 @@ def most_active_dt(df):
 
 	fig, ax = matplotlib.pyplot.subplots()
 
-	ax = dates.plt.barh()
+	ax = dates.plot.barh()
 	ax.set_title('10 самых активных дней')
 	ax.set_xlabel('Даты')
 	ax.set_ylabel('Кол-во сообщений')
@@ -79,7 +79,7 @@ def most_active_authors(df):
 
 	fig, ax = matplotlib.pyplot.subplots()
 
-	ax = authors.plt.bar()
+	ax = authors.plot.bar()
 	ax.set_title('Частые пользователи')
 	ax.set_xlabel('Пользователи')
 	ax.set_ylabel('Кол-во сообщений')
