@@ -31,6 +31,27 @@ def main():
 
 			return extraction.create_df(messages, date_format)
 		
+		def plot_dt(df):
+			dt = df['Date'].value_counts().head(10).to_dict()
+
+			dt_df = pd.DataFrame(data=dt.values(), columns=['Кол-во сообщений'], index=dt.keys())
+	
+    			plot = px.histogram(dt_df, x='Дата')    
+    			plot.layout.yaxis.title.text = 'Кол-во сообщений'
+
+    			return plot
+
+		def plot_authors(df):
+			authors = df[df['Author'] != None].value_counts().to_dict()
+
+			auth_df = pd.DataFrame(data=authors.values(), columns=['Кол-во сообщений'], index=authors.keys())
+	
+    			plot = px.histogram(auth_df, x='Автор')    
+    			plot.layout.yaxis.title.text = 'Кол-во сообщений'
+
+    			return plot
+
+		
 		try:
 			file = uploaded_file.read()
 			
@@ -59,10 +80,10 @@ def main():
 			df = extraction.create_df(file, date_format)
 
 			with st.beta_expander('Самые активные дни'):
-				st.plotly_chart(analysis.most_active_dt(df))
+				st.plotly_chart(plot_dt(df))
 
 			with st.beta_expander(''):
-				st.plotly_chart(analysis.plot_authors(df))
+				st.plotly_chart(plot_authors(df))
 
 				# authors = pd.DataFrame(df[df['Author'] != None].value_counts().sort_values(by='columns', ascending=False), columns=['Имя', 'Место'])
 				# authors.index += 1
