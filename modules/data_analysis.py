@@ -1,4 +1,4 @@
-import matplotlib.pyplot 
+import matplotlib.pyplot as plt
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -61,25 +61,21 @@ def color_func(word=None, font_size=None,
 	return f'hsl({random_state.randint(230, 270)}, {110}%, {60}%)'
 
 def most_active_dt(df):
-	dates = df['Date'].value_counts().head(10)
-
-	fig, ax = matplotlib.pyplot.subplots()
-
-	ax = dates.plot.barh()
-	ax.set_title('10 самых активных дней')
-	ax.set_xlabel('Даты')
-	ax.set_ylabel('Кол-во сообщений')
-
-	matplotlib.pyplot.tight_layout()
-
-	return fig
+	fig, ax = plt.subplots()
+	
+    	ax = df['Date'].value_counts().head(10).plot.barh()
+    	ax.set_title('10 самых активных дней')
+    	ax.set_xlabel('Кол-во сообщений')
+    	ax.set_ylabel('Дата')
+	
+    	plt.tight_layout()
+	
+    	return fig
 
 def most_active_authors(df):
-	authors = df[df['Author'] != None].value_counts()
-
 	fig, ax = matplotlib.pyplot.subplots()
 
-	ax = authors.plot.bar()
+	ax = df[df['Author'] != None].value_counts().plot.bar()
 	ax.set_title('Частые пользователи')
 	ax.set_xlabel('Пользователи')
 	ax.set_ylabel('Кол-во сообщений')
