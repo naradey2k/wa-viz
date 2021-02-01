@@ -44,8 +44,10 @@ def main():
 			return plot
 
 		def plot_authors(df):
-			authors = df[df['Author'] != None].value_counts().to_dict()
-
+			authors = df['Author'].value_counts().to_dict()
+			
+			authors.pop(None)
+			
 			auth_df = pd.DataFrame(data=authors.values(), columns=['Кол-во сообщений'], index=authors.keys())
 	
 			plot = px.histogram(auth_df, x='Кол-во сообщений')    
