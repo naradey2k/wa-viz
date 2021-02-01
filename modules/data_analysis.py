@@ -1,4 +1,4 @@
-import matplotlib.pyplot as plt
+import matplotlib.pyplot 
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -63,27 +63,27 @@ def color_func(word=None, font_size=None,
 def most_active_dt(df):
 	dates = df['Date'].value_counts().head(10)
 
-	fig, ax = plt.subplots()
+	fig, ax = matplotlib.pyplot.subplots()
 
 	ax = dates.plt.barh()
 	ax.set_title('10 самых активных дней')
 	ax.set_xlabel('Даты')
 	ax.set_ylabel('Кол-во сообщений')
 
-	plt.tight_layout()
+	matplotlib.pyplot.tight_layout()
 
 	return fig
 
 def most_active_authors(df):
 	authors = df[df['Author'] != None].value_counts()
 
-	fig, ax = plt.subplots()
+	fig, ax = matplotlib.pyplot.subplots()
 
 	ax = authors.plt.bar()
 	ax.set_title('Частые пользователи')
 	ax.set_xlabel('Пользователи')
 	ax.set_ylabel('Кол-во сообщений')
 
-	plt.tight_layout()
+	matplotlib.pyplot.tight_layout()
 
 	return fig
