@@ -13,6 +13,7 @@ nltk.download('punkt')
 from nltk.tokenize import word_tokenize
 from pymorphy2 import MorphAnalyzer
 from nltk.corpus import stopwords
+from plotly import express as px
 from PIL import Image
 
 @st.cache
@@ -61,25 +62,40 @@ def color_func(word=None, font_size=None,
 	return f'hsl({random_state.randint(230, 270)}, {110}%, {60}%)'
 
 def most_active_dt(df):
-	fig, ax = plt.subplots()
+# 	fig, ax = plt.subplots()
 	
-    	ax = df['Date'].value_counts().head(10).plot.barh()
-    	ax.set_title('10 самых активных дней')
-    	ax.set_xlabel('Кол-во сообщений')
-    	ax.set_ylabel('Дата')
+#     	ax = df['Date'].value_counts().head(10).plot.barh()
+#     	ax.set_title('10 самых активных дней')
+#     	ax.set_xlabel('Кол-во сообщений')
+#     	ax.set_ylabel('Дата')
 	
-    	plt.tight_layout()
+#     	plt.tight_layout()
 	
-    	return fig
+#     	return fig
+
+	df = df['Date'].values_counts().head(10)
+		
+	plot = px.histogram(df, x='Дата', **kwargs)
+	plot.layout.yaxis.title.text = 'Кол-во сообщений'
+		
+	return plot
+
+def create_hist(df
 
 def most_active_authors(df):
-	fig, ax = matplotlib.pyplot.subplots()
+# 	fig, ax = matplotlib.pyplot.subplots()
 
-	ax = df[df['Author'] != None].value_counts().plot.bar()
-	ax.set_title('Частые пользователи')
-	ax.set_xlabel('Пользователи')
-	ax.set_ylabel('Кол-во сообщений')
+# 	ax = df[df['Author'] != None].value_counts().plot.bar()
+# 	ax.set_title('Частые пользователи')
+# 	ax.set_xlabel('Пользователи')
+# 	ax.set_ylabel('Кол-во сообщений')
 
-	matplotlib.pyplot.tight_layout()
+# 	matplotlib.pyplot.tight_layout()
 
-	return fig
+# 	return fig
+	df = df[df['Author'] != None].values_counts()
+		
+	plot = px.histogram(df, x='Автор', **kwargs)
+	plot.layout.yaxis.title.text = 'Кол-во сообщений'
+		
+	return plot
