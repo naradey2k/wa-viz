@@ -35,21 +35,21 @@ def main():
 			dt = df['Date'].value_counts().head(10).to_dict()
 
 			dt_df = pd.DataFrame(data=dt.values(), columns=['Кол-во сообщений'], index=dt.keys())
-	
-    			plot = px.histogram(dt_df, x='Дата')    
-    			plot.layout.yaxis.title.text = 'Кол-во сообщений'
+			
+			plot = px.histogram(dt_df, x='Дата')    
+			plot.layout.yaxis.title.text = 'Кол-во сообщений'
 
-    			return plot
+			return plot
 
 		def plot_authors(df):
 			authors = df[df['Author'] != None].value_counts().to_dict()
 
 			auth_df = pd.DataFrame(data=authors.values(), columns=['Кол-во сообщений'], index=authors.keys())
 	
-    			plot = px.histogram(auth_df, x='Автор')    
-    			plot.layout.yaxis.title.text = 'Кол-во сообщений'
+			plot = px.histogram(auth_df, x='Автор')    
+			plot.layout.yaxis.title.text = 'Кол-во сообщений'
 
-    			return plot
+			return plot
 
 		
 		try:
