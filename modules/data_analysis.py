@@ -1,4 +1,3 @@
-import matplotlib as plt
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -10,6 +9,7 @@ import nltk
 nltk.download('stopwords')
 nltk.download('punkt')
 
+from matplotlib import pyplot as plt
 from nltk.tokenize import word_tokenize
 from pymorphy2 import MorphAnalyzer
 from nltk.corpus import stopwords
@@ -59,11 +59,6 @@ def color_func(word=None, font_size=None,
                font_path=None, random_state=None):
 	
 	return f'hsl({random_state.randint(230, 270)}, {110}%, {60}%)'
-
-def get_authors(df):
-	authors = df['Author'].unique().values
-
-	return [author for author in authors if author != None]
 
 def most_active_dt(df):
 	dates = df['Date'].value_counts().head(10)
