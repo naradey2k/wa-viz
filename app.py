@@ -32,7 +32,7 @@ def main():
 	uploaded_file = st.file_uploader(label='', type='txt')
 	
 	if uploaded_file is not None:    
-     		stringio = StringIO(uploaded_file.decode("utf-8"))
+		stringio = StringIO(uploaded_file.decode("utf-8"))
 		string_data = stringio.read()
 		
 		raw_data = read_data(string_data)
