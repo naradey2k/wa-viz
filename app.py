@@ -9,9 +9,9 @@ from datetime import datetime
 from io import StringIO
 
 def get_data(message):
-	splitted = line.split(' - ') 
+	splitted = message.split(' - ') 
     	
-	dt = splitLine[0]	
+	dt = splitted[0]	
 	date = dt.split(', ')[0]  
 	
 	message = ' '.join(splitted[1:]) 
