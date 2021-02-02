@@ -45,22 +45,22 @@ def create_data(messages, date_format):
 	date_formats = {'dd.mm.yyyy': '%d.%m.%Y',
 					'dd.mm.yy': '%d.%m.%y'}
 
-	data = []
-	l_messages = []
-	author, text = None, None
-
+	dates = []
+	texts = []
+	authors = []
+	
 	for message in messages:
-		if starts_with_date(message): 
-			if len(l_messages) > 0:
-				data.append((date, author, ' '.join(l_messages))) 
-				
-			l_messages.clear() 
-			date, author, message = get_data(message) 
-			l_messages.append(message)
+		if starts_with_date(message):				
+			date, author, text = get_data(message) 
+			
+			dates.append(date)
+			texts.append(text)
+			authors.append(author)
+			
 		else:
-			l_messages.append(message)
+			texts.append(text)
 		
-	return data
+	return dates, authors, texts
 
 def main():
 	st.title('WhatsApp Chat Analysis')
@@ -88,9 +88,7 @@ def main():
 		
 # 		raw_data = read_data(string_data)
 
-		data = create_data(raw_data, date_format)
-
-		dates, authors, texts = map(list, *zip(data))
+		dates, authors, texts = create_data(raw_data, date_format)
 
 		with st.beta_expander('Распределение сообщений'):
 			st.header('По дням')
