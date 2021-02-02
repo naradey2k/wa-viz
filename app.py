@@ -9,7 +9,7 @@ from io import StringIO
 
 @st.cache
 def read_data(file_name):
-	with open(file_name, 'rb', encoding='utf-8') as file:	
+	with open(file_name, 'r', encoding='utf-8') as file:	
 		messages = file.readlines()
 
 	return messages
