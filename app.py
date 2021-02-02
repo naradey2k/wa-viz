@@ -5,7 +5,7 @@ import sys
 
 from modules import data_extraction as extraction
 from modules import data_analysis as analysis
-from StringIO import StringIO
+from io import StringIO
 
 @st.cache
 def read_data(file_name):
