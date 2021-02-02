@@ -60,6 +60,8 @@ def create_data(messages, date_format):
 			authors.append(author)
 			
 		else:
+			_, _, text = get_data(message)
+			
 			texts.append(text)
 		
 	return dates, authors, texts
