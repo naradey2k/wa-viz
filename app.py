@@ -53,6 +53,8 @@ def create_data(messages, date_format):
 		if starts_with_date(message):				
 			date, author, text = get_data(message) 
 			
+			date = datetime.strptime(date, date_formats[date_format])
+			
 			dates.append(date)
 			texts.append(text)
 			authors.append(author)
