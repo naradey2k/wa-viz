@@ -52,7 +52,7 @@ def create_data(messages, date_format):
 	for message in messages:
 		if starts_with_date(message): 
 			if len(l_messages) > 0:
-				data.append([date, author, ' '.join(l_messages)]) 
+				data.append((date, author, ' '.join(l_messages))) 
 				
 			l_messages.clear() 
 			date, author, message = get_data(message) 
