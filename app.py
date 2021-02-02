@@ -31,7 +31,9 @@ def main():
 	uploaded_file = st.file_uploader(label='', type='txt')
 	
 	if uploaded_file is not None:	
-		raw_data = read_data(uploaded_file)
+		file = str(uploaded_file)
+		
+		raw_data = read_data(file)
 
 		data = extraction.create_data(raw_data, date_format)
 
