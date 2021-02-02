@@ -82,7 +82,7 @@ def main():
 	if uploaded_file is not None:    
 		bytes_data = uploaded_file.read()
 		
-		stringio = StringIO(bytes_data.decode("utf-8"))
+		stringio = StringIO(bytes_data.decode('utf-8'))
 		
 		raw_data = stringio.read()		
 		
@@ -90,7 +90,7 @@ def main():
 
 		data = create_data(raw_data, date_format)
 
-		dates, authors, texts = map(list, *zip(data))
+		dates, authors, texts = map(list, zip(data))
 
 		with st.beta_expander('Распределение сообщений'):
 			st.header('По дням')
