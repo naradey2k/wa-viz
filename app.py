@@ -8,7 +8,7 @@ from modules import data_analysis as analysis
 
 @st.cache
 def read_data(file_name):
-	with open(file_name, 'r') as file:	
+	with open(file_name, 'rb', , encoding='utf-8') as file:	
 		messages = file.readlines()
 
 	return messages
