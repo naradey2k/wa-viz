@@ -5,7 +5,18 @@ import sys
 
 from modules import data_extraction as extraction
 from modules import data_analysis as analysis
+from datetime import datetime
 from io import StringIO
+
+def get_data(message):
+	splitted = message.split(' - ')
+
+	dt = splitted[0]
+	date = dt.split(', ')[0]
+
+	author, text = splitted[1].split(': ')[0], splitted[1].split(': ')[1]
+
+	return date, author, text
 
 @st.cache
 def read_data(file_name):
