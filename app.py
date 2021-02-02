@@ -14,6 +14,23 @@ def read_data(file_name):
 
 	return messages
 
+@st.cache
+def create_data(messages, date_format):	
+	date_formats = {'dd.mm.yyyy': '%d.%m.%Y',
+					'dd.mm.yy': '%d.%m.%y'}
+
+	data = []
+	author, text = None, None
+
+	for message in messages:	
+		date, author, text = get_data(message)		
+
+        date = datetime.strptime(date, date_formats[date_format])
+
+		data.append([date, author, text])
+		
+	return data
+
 def main():
 	st.title('WhatsApp Chat Analysis')
 	st.markdown('Приложение создано для анализа русского WhatsApp чата')
