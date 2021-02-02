@@ -59,7 +59,9 @@ def plot_line_dates(dates):
 
 @st.cache
 def plot_dates(dates):
-    df = pd.DataFrame(data=dates, columns=['Дата'])
+	fdist = collections.Counter(dates)	
+
+    df = pd.DataFrame(data=fdist.values(), columns=['Дата'], index=fdist.keys())
 
     plot = px.histogram(df, x='Дата')
     plot.layout.yaxis.label = 'Кол-во сообщений'
