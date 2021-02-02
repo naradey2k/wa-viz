@@ -6,6 +6,13 @@ import sys
 from modules import data_extraction as extraction
 from modules import data_analysis as analysis
 
+@st.cache
+def read_data(file_name):
+	with open(file_name, 'r', encoding='utf-8') as file:	
+		messages = file.readlines()
+
+	return messages
+
 def main():
 	st.title('WhatsApp Chat Analysis')
 	st.markdown('Приложение создано для анализа русского WhatsApp чата')
@@ -24,7 +31,7 @@ def main():
 	uploaded_file = st.file_uploader(label='', type='txt')
 	
 	if uploaded_file is not None:	
-		raw_data = extraction.read_data(uploaded_file)
+		raw_data = read_data(uploaded_file)
 
 		data = extraction.create_data(raw_data, date_format)
 
