@@ -1,34 +1,32 @@
+import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 import streamlit as st
 import pandas as pd
-import numpy as np
-import wordcloud
-import pymorphy2
-import random
+import collections
 import nltk
+import re
 
-ntlk.download('stopwords')
-ntlk.download('punkt')
+nltk.download('stopwords')
+nltk.download('punkt')
 
-from nltk.tokenize import word_tokenize
+from plotly import express as px
 from pymorphy2 import MorphAnalyzer
+from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
-from PIL import Image
+
 
 @st.cache
-def tokenize(text):
-	return [word for word in word_tokenize(text, language='russian')]
+def tokenize(message):
+	return [token for token in word_tokenize(message, language='russian')]
 
 @st.cache
-def get_words(df):
-	texts = df['Text'].tolist()
+def get_words(messages):	
 	words = []
-
 	lemmatizer = MorphAnalyzer()
 	stopwords = stopwords.words('russian')
 
-	for text in texts:
-		for token in tokenize(text):
+	for message in messages:
+		for token in tokenize(message):
 			if token not in stopwords:
 				token = lemmatizer.normal_forms(token)[0]
 				words.append(token)
@@ -36,52 +34,49 @@ def get_words(df):
 	return words
 
 @st.cache
-def create_wc(df, form):
+def create_wc(messages, form):
 	forms = {'Heart': 'forms/heart.png',
 			 'Brain': 'forms/brain.png',
 			 'Stormtrooper': 'forms/stormtrooper.png'}
 
-	df = df[df['Text'] != '<Без медиафайлов>']
-	df = df[df['Text'] != 'Данное соощение удалено']
-	df = df[df['Text'] != 'Вы удалили данное соощение']
+    words = get_words(messages)
 
-	texts = df['Text'].tolist()
-
-	words = get_words(texts)
-
-	return wordcloud.WordCloud(background_color="white", max_font_size=80, random_state=0, width=800, height=480,
+    fdict = collections.Counter(words)
+    
+    return wordcloud.WordCloud(background_color="white", max_font_size=80, random_state=0, width=800, height=480,
                                mask=np.array(Image.open(forms[form])), color_func=color_func,
                                font_path="fonts/Oswald-Regular.ttf") \
-        .generate_from_frequencies({key: val for key, val in words.items() if val >= 20})
-
-def color_func(word=None, font_size=None,
-               position=None, orientation=None,
-               font_path=None, random_state=None):
-	
-	return f'hsl({random_state.randint(230, 270)}, {110}%, {60}%)'
+        .generate_from_frequencies({key: value for key, value in fdict.items() if value >= 20})
 
 
-def most_active_dt(df):
-	dt = df['Date'].value_counts().head(10).to_dict()
+@st.cache
+def plot_line_dates(data):
+    dates = map(list, *zip(data))[0]
 
-	dt_df = pd.DataFrame(data=dt.values(), columns=['Кол-во сообщений'], index=dt.keys())
-	
-    plot = px.histogram(dt_df, x='Дата')    
-    plot.layout.yaxis.title.text = 'Кол-во сообщений'
+    fdist = collections.Counter(dates)
+
+    plot = go.Figure(data=go.Scatter(x=fdist.keys(), y=fdist.values()))
 
     return plot
 
-def plot_authors(df):
-	authors = df[df['Author'] != None].value_counts().to_dict()
+@st.cache
+def plot_dates(data):
+    dates = map(list, *zip(data))[0]
 
-	auth_df = pd.DataFrame(data=authors.values(), columns=['Кол-во сообщений'], index=authors.keys())
-	
-    plot = px.histogram(auth_df, x='Автор')    
-    plot.layout.yaxis.title.text = 'Кол-во сообщений'
+    df = pd.DataFrame(data=dates, columns=['Дата'])
+
+    plot = px.histogram(df, x='Дата')
+    plot.layout.yaxis.label = 'Кол-во сообщений'
 
     return plot
 
+@st.cache
+def plot_authors(data):
+    authors = map(list, *zip(data))[1]
 
+    df = pd.DataFrame(data=authors, columns=['Автор'])
 
+    plot = px.histogram(df, x='Автор')
+    plot.layout.yaxis.label = 'Кол-во сообщений'
 
-
+    return plot 
