@@ -11,20 +11,17 @@ from io import StringIO
 def get_data(message):
 	splitted = line.split(' - ') 
     	
-	dt = splitLine[0]
-	
+	dt = splitLine[0]	
 	date = dt.split(', ')[0]  
 	
 	message = ' '.join(splitted[1:]) 
-
-        splitted_message = message.split(': ')
+	splitted_message = message.split(': ')
 	
-        author = splitted_message[0] 
+	author = splitted_message[0] 
 	
-        text = ' '.join(splitted_message[1:])
-
+	text = ' '.join(splitted_message[1:])
         
-    	return date, author, text
+	return date, author, text
 	
 # 	splitted = message.split(' - ')
 
