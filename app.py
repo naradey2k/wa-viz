@@ -39,7 +39,7 @@ def main():
 
 			st.header('Динамика сообщений')
 			st.plotly_chart(analysis.plot_line_dates(dates))
-
+			
 		with st.beta_expander('Облако слов'):			
 			word_cloud = analysis.create_wc(texts, form)
 
