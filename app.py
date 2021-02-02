@@ -3,7 +3,6 @@ import streamlit as st
 import pandas as pd
 import sys
 
-from plotly import express as px
 from modules import data_extraction as extraction
 from modules import data_analysis as analysis
 
@@ -24,82 +23,32 @@ def main():
 
 	uploaded_file = st.file_uploader(label='', type='txt')
 	
-	if uploaded_file is not None:
-# 		try:
-		@st.cache(persist=True, allow_output_mutation=True)
-		def read_file(file_name, date_format):	
-			with open(file_name, 'r', encoding='utf-8') as file:			
-				messages = file.readlines()		
+	if uploaded_file is not None:	
+		raw_data = extraction.read_data(uploaded_file)
 
-			return extraction.create_df(messages, date_format)
-		
-		def plot_dt(df):
-			dt = df['Date'].value_counts().head(10).to_dict()
+		data = extraction.create_data(raw_data, date_format)
 
-			dt_df = pd.DataFrame(data=dt.values(), columns=['Кол-во сообщений'], index=dt.keys())
-			
-			plot = px.histogram(dt_df, x='Кол-во сообщений')    
-			plot.layout.yaxis.title.text = 'Дата'
+		dates, authors, texts = map(list, *zip(data))
 
-			return plot
+		with st.beta_expander('Распределение сообщений'):
+			st.header('По дням')
+			st.plotly_chart(analysis.plot_dates(dates))
 
-		def plot_authors(df):
-			authors = df['Author'].value_counts().to_dict()	
-			
-			auth_df = pd.DataFrame(data=authors.values(), columns=['Кол-во сообщений'], index=authors.keys())
-	
-			plot = px.histogram(auth_df, x='Кол-во сообщений')    
-			plot.layout.yaxis.title.text = 'Автор'
+			st.header('По автору')
+			st.plotly_chart(analysis.most_active_authors(authors))
 
-			return plot
+			st.header('Динамика сообщений')
+			st.plotly_chart(analysis.plot_line_dates(dates))
 
-		
-		try:
-			file = uploaded_file.read()
-			
-			file = str(file, 'utf-8')
-			
-			df = read_file(file, date_format)
-		
-			with st.beta_expander('Самые активные дни'):
-				st.plotly_chart(analysis.most_active_df(df))
+		with st.beta_expander('Облако слов'):			
+			word_cloud = analysis.create_wc(texts, form)
 
-			with st.beta_expander(''):
-				st.plotly_chart(analysis.most_active_authors(df))
+			fig, ax = plt.subplots()
 
-				authors = pd.DataFrame(df[df['Author'] != None].value_counts().sort_values(by='columns', ascending=False), columns=['Имя', 'Место'])
-				authors.index += 1
-				authors.index.name = 'Место'	
+			ax.imshow(word_cloud, interpolation='bilinear')
+			ax.axis("off")
 
-				st.table(authors)
-
-			with st.beta_expander('Облако слов'):
-				st.plotly_chart(analysis.create_wc(df, form))
-			
-		except OSError as exc:			
-			file = str(file)
-				
-			df = extraction.create_df(file, date_format)
-
-			with st.beta_expander('Самые активные дни'):
-				st.plotly_chart(plot_dt(df))
-
-			with st.beta_expander(''):
-				st.plotly_chart(plot_authors(df))
-
-				# authors = pd.DataFrame(df[df['Author'] != None].value_counts().sort_values(by='columns', ascending=False), columns=['Имя', 'Место'])
-				# authors.index += 1
-				# authors.index.name = 'Место'	
-
-				# st.table(authors)
-
-			with st.beta_expander('Облако слов'):
-				st.plotly_chart(analysis.create_wc(df, form))
-
-# 		except:
-# 			error = sys.exc_info()[0]
-# 			st.error('Что-то пошло не так! Выберите другой тип даты! Тип ошибки - '.format(error.__name__))
-
+			st.pyplot(fig)
 
 if __name__ == '__main__':
 	main()
