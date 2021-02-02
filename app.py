@@ -90,7 +90,7 @@ def main():
 
 		data = create_data(raw_data, date_format)
 
-		dates, authors, texts = map(list, zip(data))
+		dates, authors, texts = map(list, *zip(data))
 
 		with st.beta_expander('Распределение сообщений'):
 			st.header('По дням')
