@@ -57,7 +57,7 @@ def main():
 		
 # 		raw_data = read_data(string_data)
 
-		data = extraction.create_data(raw_data, date_format)
+		data = create_data(raw_data, date_format)
 
 		dates, authors, texts = map(list, *zip(data))
 
