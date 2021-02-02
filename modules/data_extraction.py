@@ -23,9 +23,9 @@ def create_df(messages, date_format):
 
 	for message in messages:	
 		date, author, text = get_data(message)		
+
+        date = datetime.strptime(date, date_formats[date_format])
+
 		data.append([date, author, text])
 
-	df = pd.DataFrame(data, columns=['Date', 'Author', 'Text'])	
-	df['Date'] = pd.to_datetime(df['Date'], format=date_formats[date_format])
-
-	return df
+	return data
