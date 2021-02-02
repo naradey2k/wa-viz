@@ -5,6 +5,7 @@ import sys
 
 from modules import data_extraction as extraction
 from modules import data_analysis as analysis
+from StringIO import StringIO
 
 @st.cache
 def read_data(file_name):
@@ -30,10 +31,11 @@ def main():
 
 	uploaded_file = st.file_uploader(label='', type='txt')
 	
-	if uploaded_file is not None:	
-		file = str(uploaded_file, 'utf-8')
+	if uploaded_file is not None:    
+     		stringio = StringIO(uploaded_file.decode("utf-8"))
+		string_data = stringio.read()
 		
-		raw_data = read_data(file)
+		raw_data = read_data(string_data)
 
 		data = extraction.create_data(raw_data, date_format)
 
