@@ -8,6 +8,15 @@ from modules import data_analysis as analysis
 from datetime import datetime
 from io import StringIO
 
+def starts_with_date(message):
+    pattern = '^([0-2][0-9]|(3)[0-1])(\.)(((0)[0-9])|((1)[0-2]))(\.)(\d{2}|\d{4})(,)$'
+    result = re.match(pattern, message)
+	
+    if result:
+        return True
+
+    return False
+
 def get_data(message):
 	splitted = message.split(' - ') 
     	
@@ -22,15 +31,6 @@ def get_data(message):
 	text = ' '.join(splitted_message[1:])
         
 	return date, author, text
-	
-# 	splitted = message.split(' - ')
-
-# 	dt = splitted[0]
-# 	date = dt.split(', ')[0]
-
-# 	author, text = splitted[1].split(': ')[0], splitted[1].split(': ')[1]
-
-# 	return date, author, text
 
 @st.cache
 def read_data(file_name):
@@ -45,14 +45,19 @@ def create_data(messages, date_format):
 					'dd.mm.yy': '%d.%m.%y'}
 
 	data = []
+	l_messages = []
 	author, text = None, None
 
-	for message in messages:	
-		date, author, text = get_data(message)		
-
-		date = datetime.strptime(date, date_formats[date_format])
-
-		data.append([date, author, text])
+	for message in messages:
+		if starts_with_date(message): 
+			if len(l_messages) > 0:
+				data.append([date, author, ' '.join(l_messages)]) 
+				
+			l_messages.clear() 
+			date, author, message = get_data(message) 
+			l_messages.append(message)
+		else:
+			l_messages.append(message)
 		
 	return data
 
