@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import streamlit as st
 import pandas as pd
+import re
 import sys
 
 from modules import data_extraction as extraction
