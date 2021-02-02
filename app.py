@@ -9,14 +9,31 @@ from datetime import datetime
 from io import StringIO
 
 def get_data(message):
-	splitted = message.split(' - ')
+	splitted = line.split(' - ') 
+    	
+	dt = splitLine[0]
+	
+	date = dt.split(', ')[0]  
+	
+	message = ' '.join(splitted[1:]) 
 
-	dt = splitted[0]
-	date = dt.split(', ')[0]
+        splitted_message = message.split(': ')
+	
+        author = splitted_message[0] 
+	
+        text = ' '.join(splitted_message[1:])
 
-	author, text = splitted[1].split(': ')[0], splitted[1].split(': ')[1]
+        
+    	return date, author, text
+	
+# 	splitted = message.split(' - ')
 
-	return date, author, text
+# 	dt = splitted[0]
+# 	date = dt.split(', ')[0]
+
+# 	author, text = splitted[1].split(': ')[0], splitted[1].split(': ')[1]
+
+# 	return date, author, text
 
 @st.cache
 def read_data(file_name):
