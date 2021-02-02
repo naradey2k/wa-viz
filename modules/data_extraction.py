@@ -31,7 +31,7 @@ def create_data(messages, date_format):
 	return data
 
 @st.cache
-def read_data(file_name, date_format):
+def read_data(file_name):
     with open(file_name, 'r', encoding='utf-8') as file:
         messages = file.readlines()
 
