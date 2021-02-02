@@ -31,7 +31,7 @@ def main():
 	uploaded_file = st.file_uploader(label='', type='txt')
 	
 	if uploaded_file is not None:	
-		file = str(uploaded_file)
+		file = uploaded_file.read()
 		
 		raw_data = read_data(file)
 
