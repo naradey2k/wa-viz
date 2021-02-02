@@ -9,7 +9,7 @@ from io import StringIO
 
 @st.cache
 def read_data(file_name):
-	with open(file_name, 'r', encoding='utf-8') as file:	
+	with open(file_name, 'r') as file:	
 		messages = file.readlines()
 
 	return messages
@@ -36,9 +36,9 @@ def main():
 		
 		stringio = StringIO(bytes_data.decode("utf-8"))
 		
-		string_data = stringio.read()		
+		raw_data = stringio.read()		
 		
-		raw_data = read_data(string_data)
+# 		raw_data = read_data(string_data)
 
 		data = extraction.create_data(raw_data, date_format)
 
