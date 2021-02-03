@@ -1,13 +1,73 @@
+import plotly.graph_objects as go
 import matplotlib.pyplot as plt
+import plotly.express as px
 import streamlit as st
 import pandas as pd
+import collections
+import nltk
 import re
-import sys
 
-from modules import data_extraction as extraction
-from modules import data_analysis as analysis
+from pymorphy2 import MorphAnalyzer
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
 from datetime import datetime
 from io import StringIO
+
+nltk.download('stopwords')
+nltk.download('punkt')
+
+@st.cache
+def tokenize(text):
+	return [token for token in word_tokenize(text, language='russian')]
+
+@st.cache
+def get_words(texts):	
+	words = []
+	lemmatizer = MorphAnalyzer()
+	stopwords = stopwords.words('russian')
+
+	for text in texts:
+		for token in tokenize(text):
+			if token not in stopwords:
+				token = lemmatizer.normal_forms(token)[0]
+				words.append(token)
+
+	return words
+
+@st.cache
+def create_wc(texts, form):
+	forms = {'Heart': 'forms/heart.png',
+			 'Brain': 'forms/brain.png',
+			 'Stormtrooper': 'forms/stormtrooper.png'}
+
+	words = get_words(texts)
+	
+	fdict = collections.Counter(words)
+    
+	return wordcloud.WordCloud(background_color="white", max_font_size=80, random_state=0, width=800, height=480,
+                               mask=np.array(Image.open(forms[form])), color_func=color_func,
+                               font_path="fonts/Oswald-Regular.ttf") \
+        .generate_from_frequencies({key: value for key, value in fdict.items() if value >= 20})
+
+@st.cache
+def plot_line_df(dates, x_label, y_label, **kwargs):
+	fdist = collections.Counter(dates)
+	
+	df = pd.DataFrame(data=fdist.values(), columns=x_label, index=fdist.keys())
+	
+	plot = px.line(df, layers={'x':x_label, 'y':y_label}, **kwargs)
+
+	return plot
+
+@st.cache
+def plot_df(dates, x_label, y_label, **kwargs):
+	fdist = collections.Counter(dates)	
+	
+	df = pd.DataFrame(data=fdist.values(), columns=x_label, index=fdist.keys()).value_counts().head(10)
+
+	plot = px.histogram(df, layers={'x':x_label, 'y':y_label}, **kwargs)
+
+	return plot
 
 def starts_with_date(message):
     pattern = '^([0-2][0-9]|(3)[0-1])(\.)(((0)[0-9])|((1)[0-2]))(\.)(\d{2}|\d{4})(,)$'
@@ -96,16 +156,16 @@ def main():
 
 		with st.beta_expander('Распределение сообщений'):
 			st.header('По дням')
-			st.plotly_chart(analysis.plot_df(dates, 'Дата', 'Кол-во сообщений'))
+			st.plotly_chart(plot_df(dates, 'Дата', 'Кол-во сообщений'))
 
 			st.header('По автору')
-			st.plotly_chart(analysis.plot_df(authors, 'Автор', 'Кол-во сообщений'))
+			st.plotly_chart(plot_df(authors, 'Автор', 'Кол-во сообщений'))
 
 			st.header('Динамика сообщений')
-			st.plotly_chart(analysis.plot_line_df(dates, 'Дата', 'Кол-во сообщений'))
+			st.plotly_chart(plot_line_df(dates, 'Дата', 'Кол-во сообщений'))
 			
 		with st.beta_expander('Облако слов'):			
-			word_cloud = analysis.create_wc(texts, form)
+			word_cloud = create_wc(texts, form)
 
 			fig, ax = plt.subplots()
 
