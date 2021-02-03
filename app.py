@@ -50,20 +50,16 @@ def create_wc(texts, form):
         .generate_from_frequencies({key: value for key, value in fdict.items() if value >= 20})
 
 @st.cache
-def plot_line_df(data, x_label, y_label, **kwargs):
-# 	fdist = collections.Counter(dates)
-	
-	df = pd.DataFrame(data=data, columns=[y_label])
+def plot_line_df(data, x_label, y_label='Кол-во сообщений', **kwargs):	
+	df = pd.DataFrame(data=data, columns=[x_label])
 	
 	plot = px.line(df, x=x_label, y=y_label, **kwargs)
 
 	return plot
 
 @st.cache
-def plot_df(data, x_label, y_label, **kwargs):
-	# 	fdist = collections.Counter(dates)	
-	
-	df = pd.DataFrame(data=data, columns=[y_label])
+def plot_df(data, x_label, y_label='Кол-во сообщений', **kwargs):	
+	df = pd.DataFrame(data=data, columns=[x_label])
 
 	plot = px.histogram(df, x=x_label, y=y_label, **kwargs)
 
@@ -156,13 +152,13 @@ def main():
 
 		with st.beta_expander('Распределение сообщений'):
 			st.header('По дням')
-			st.plotly_chart(plot_df(dates, 'Дата', 'Кол-во сообщений'))
+			st.plotly_chart(plot_df(dates, 'Дата'))
 
 			st.header('По автору')
-			st.plotly_chart(plot_df(authors, 'Автор', 'Кол-во сообщений'))
+			st.plotly_chart(plot_df(authors, 'Автор'))
 
 			st.header('Динамика сообщений')
-			st.plotly_chart(plot_line_df(dates, 'Дата', 'Кол-во сообщений'))
+			st.plotly_chart(plot_line_df(dates, 'Дата'))
 			
 		with st.beta_expander('Облако слов'):			
 			word_cloud = create_wc(texts, form)
