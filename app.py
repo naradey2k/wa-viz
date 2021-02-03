@@ -24,11 +24,11 @@ def tokenize(text):
 def get_words(texts):	
 	words = []
 	lemmatizer = MorphAnalyzer()
-	stopwords = stopwords.words('russian')
+	stop_words = stopwords.words('russian')
 
 	for text in texts:
 		for token in tokenize(text):
-			if token not in stopwords:
+			if token not in stop_words:
 				token = lemmatizer.normal_forms(token)[0]
 				words.append(token)
 
