@@ -48,31 +48,30 @@ def create_wc(texts, form):
                                font_path="fonts/Oswald-Regular.ttf") \
         .generate_from_frequencies({key: value for key, value in fdict.items() if value >= 20})
 
-
 @st.cache
-def plot_line_dates(dates, **kwargs):
+def plot_line(dates, x_label, y_label, **kwargs):
 	fdist = collections.Counter(dates)
 	
-	df = pd.DataFrame(data=fdist.values(), columns=['Дата'], index=fdist.keys())
+	df = pd.DataFrame(data=fdist.values(), columns=x_label, index=fdist.keys())
 	
-	plot = px.line(df, layers={'x':'Дата', 'y':'Кол-во сообщений'}, **kwargs)
+	plot = px.line(df, layers={'x':x_label, 'y':y_label}, **kwargs)
 
 	return plot
 
 @st.cache
-def plot_dates(dates, **kwargs):
+def plot(dates, x_label, y_label, **kwargs):
 	fdist = collections.Counter(dates)	
 	
-	df = pd.DataFrame(data=fdist.values(), columns=['Дата'], index=fdist.keys()).value_counts().head(10)
+	df = pd.DataFrame(data=fdist.values(), columns=x_label, index=fdist.keys()).value_counts().head(10)
 
-	plot = px.histogram(df, layers={'x':'Дата', 'y':'Кол-во сообщений'}, **kwargs)
+	plot = px.histogram(df, layers={'x':x_label, 'y':y_label}, **kwargs)
 
 	return plot
 
-@st.cache
-def plot_authors(authors, **kwargs):
-	df = pd.DataFrame(data=authors, columns=['Автор'])
+# @st.cache
+# def plot_authors(authors, **kwargs):
+# 	df = pd.DataFrame(data=authors, columns=['Автор'])
 
-	plot = px.histogram(df, layers={'x':'Автор', 'y':'Кол-во сообщений'}, **kwargs)	
+# 	plot = px.histogram(df, layers={'x':'Автор', 'y':'Кол-во сообщений'}, **kwargs)	
 
-	return plot 
+# 	return plot 
