@@ -49,7 +49,7 @@ def create_wc(texts, form):
         .generate_from_frequencies({key: value for key, value in fdict.items() if value >= 20})
 
 @st.cache
-def plot_line(dates, x_label, y_label, **kwargs):
+def plot_line_df(dates, x_label, y_label, **kwargs):
 	fdist = collections.Counter(dates)
 	
 	df = pd.DataFrame(data=fdist.values(), columns=x_label, index=fdist.keys())
@@ -59,7 +59,7 @@ def plot_line(dates, x_label, y_label, **kwargs):
 	return plot
 
 @st.cache
-def plot(dates, x_label, y_label, **kwargs):
+def plot_df(dates, x_label, y_label, **kwargs):
 	fdist = collections.Counter(dates)	
 	
 	df = pd.DataFrame(data=fdist.values(), columns=x_label, index=fdist.keys()).value_counts().head(10)
