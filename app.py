@@ -55,7 +55,7 @@ def plot_line_df(data, x_label, y_label, **kwargs):
 	
 	df = pd.DataFrame(data=data, columns=[x_label])
 	
-	plot = px.line(df, labels={'x':x_label, 'y':y_label}, **kwargs)
+	plot = px.line(df, x=x_label, y=y_label, **kwargs)
 
 	return plot
 
@@ -65,7 +65,7 @@ def plot_df(data, x_label, y_label, **kwargs):
 	
 	df = pd.DataFrame(data=data, columns=[x_label])
 
-	plot = px.histogram(df, labels={'x':x_label, 'y':y_label}, **kwargs)
+	plot = px.histogram(df, x=x_label, y=y_label, **kwargs)
 
 	return plot
 
