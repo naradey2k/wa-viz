@@ -64,7 +64,7 @@ def plot_dates(dates):
 	df = pd.DataFrame(data=fdist.values(), columns=['Дата'], index=fdist.keys())
 
 	plot = px.histogram(df, x='Дата')
-	plot.layout.yaxis.label = 'Кол-во сообщений'
+	plot.layout.yaxis.title.text = 'Кол-во сообщений'
 
 	return plot
 
@@ -73,6 +73,6 @@ def plot_authors(authors):
 	df = pd.DataFrame(data=authors, columns=['Автор'])
 
 	plot = px.histogram(df, x='Автор')
-	plot.layout.yaxis.label = 'Кол-во сообщений'
+	plot.layout.yaxis.title.text = 'Кол-во сообщений'
 
 	return plot 
