@@ -53,7 +53,7 @@ def create_wc(texts, form):
 def plot_line_df(data, x_label, y_label, **kwargs):
 # 	fdist = collections.Counter(dates)
 	
-	df = pd.DataFrame(data=data, columns=x_label)
+	df = pd.DataFrame(data=data, columns=[x_label])
 	
 	plot = px.line(df, layers={'x':x_label, 'y':y_label}, **kwargs)
 
@@ -63,7 +63,7 @@ def plot_line_df(data, x_label, y_label, **kwargs):
 def plot_df(data, x_label, y_label, **kwargs):
 	# 	fdist = collections.Counter(dates)	
 	
-	df = pd.DataFrame(data=data, columns=x_label)
+	df = pd.DataFrame(data=data, columns=[x_label])
 
 	plot = px.histogram(df, layers={'x':x_label, 'y':y_label}, **kwargs)
 
