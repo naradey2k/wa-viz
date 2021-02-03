@@ -96,13 +96,13 @@ def main():
 
 		with st.beta_expander('Распределение сообщений'):
 			st.header('По дням')
-			st.plotly_chart(analysis.plot_dates(dates))
+			st.plotly_chart(analysis.plot(dates, 'Дата', 'Кол-во сообщений'))
 
 			st.header('По автору')
-			st.plotly_chart(analysis.most_active_authors(authors))
+			st.plotly_chart(analysis.plot(authors, 'Автор', 'Кол-во сообщений'))
 
 			st.header('Динамика сообщений')
-			st.plotly_chart(analysis.plot_line_dates(dates))
+			st.plotly_chart(analysis.plot_line(dates, 'Дата', 'Кол-во сообщений'))
 			
 		with st.beta_expander('Облако слов'):			
 			word_cloud = analysis.create_wc(texts, form)
