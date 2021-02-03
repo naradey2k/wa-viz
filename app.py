@@ -53,7 +53,8 @@ def create_wc(texts, form):
 def plot_line_df(data, x_label, y_label='Кол-во сообщений', **kwargs):	
 	df = pd.DataFrame(data=data, columns=[x_label])
 	
-	plot = px.line(df, x=x_label, y=y_label, **kwargs)
+	plot = px.line(df, x=x_label, **kwargs)
+	plot.layout.yaxis.title.text = y_label
 
 	return plot
 
@@ -61,7 +62,8 @@ def plot_line_df(data, x_label, y_label='Кол-во сообщений', **kwar
 def plot_df(data, x_label, y_label='Кол-во сообщений', **kwargs):	
 	df = pd.DataFrame(data=data, columns=[x_label])
 
-	plot = px.histogram(df, x=x_label, y=y_label, **kwargs)
+	plot = px.histogram(df, x=x_label, **kwargs)
+	plot.layout.yaxis.title.text = y_label
 
 	return plot
 
