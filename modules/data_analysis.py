@@ -55,7 +55,7 @@ def plot_line_dates(dates, **kwargs):
 	
 	df = pd.DataFrame(data=fdist.values(), columns=['Дата'], index=fdist.keys())
 	
-	plot = px.line(df, labels={'x':'Дата', 'y':'Кол-во сообщений'}, **kwargs)
+	plot = px.line(df, layers={'x':'Дата', 'y':'Кол-во сообщений'}, **kwargs)
 
 	return plot
 
@@ -65,7 +65,7 @@ def plot_dates(dates, **kwargs):
 	
 	df = pd.DataFrame(data=fdist.values(), columns=['Дата'], index=fdist.keys()).value_counts().head(10)
 
-	plot = px.histogram(df, labels={'x':'Дата', 'y':'Кол-во сообщений'}, **kwargs)
+	plot = px.histogram(df, layers={'x':'Дата', 'y':'Кол-во сообщений'}, **kwargs)
 
 	return plot
 
@@ -73,6 +73,6 @@ def plot_dates(dates, **kwargs):
 def plot_authors(authors, **kwargs):
 	df = pd.DataFrame(data=authors, columns=['Автор'])
 
-	plot = px.histogram(df, labels={'x':'Автор', 'y':'Кол-во сообщений'}, **kwargs)	
+	plot = px.histogram(df, layers={'x':'Автор', 'y':'Кол-во сообщений'}, **kwargs)	
 
 	return plot 
