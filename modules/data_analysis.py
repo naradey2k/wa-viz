@@ -73,7 +73,6 @@ def plot_dates(dates):
 def plot_authors(authors):
 	df = pd.DataFrame(data=authors, columns=['Автор'])
 
-	plot = px.histogram(df, x='Автор')
-	plot.layout.yaxis.title.text = 'Кол-во сообщений'
+	plot = px.histogram(df, labels={'x':'Автор', 'y':'Кол-во сообщений'})	
 
 	return plot 
