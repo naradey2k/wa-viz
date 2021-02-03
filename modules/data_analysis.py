@@ -52,8 +52,10 @@ def create_wc(texts, form):
 @st.cache
 def plot_line_dates(dates):
 	fdist = collections.Counter(dates)
-
-	plot = go.Figure(data=go.Scatter(x=fdist.keys(), y=fdist.values()))
+	
+	df = pd.DataFrame(data=fdist.values(), columns=['Дата'], index=fdist.keys())
+	
+	plot = px.line(df, labels={'x':'Дата', 'y':'Кол-во сообщений'})
 
 	return plot
 
@@ -61,10 +63,9 @@ def plot_line_dates(dates):
 def plot_dates(dates):
 	fdist = collections.Counter(dates)	
 	
-	df = pd.DataFrame(data=fdist.values(), columns=['Дата'], index=fdist.keys())
+	df = pd.DataFrame(data=fdist.values(), columns=['Дата'], index=fdist.keys()).value_counts().head(10)
 
-	plot = px.histogram(df, x='Дата')
-	plot.layout.yaxis.title.text = 'Кол-во сообщений'
+	plot = px.histogram(df, labels={'x':'Дата', 'y':'Кол-во сообщений'})
 
 	return plot
 
