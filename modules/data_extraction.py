@@ -24,8 +24,8 @@ def create_data(messages, date_format):
 	for message in messages:	
 		date, author, text = get_data(message)		
 
-        date = datetime.strptime(date, date_formats[date_format])
+	date = datetime.strptime(date, date_formats[date_format])
 
-		data.append([date, author, text])
+	data.append([date, author, text])
 
 	return data
